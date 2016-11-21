@@ -2,25 +2,19 @@ import unittest
 import subprocess
 import os, sys
 import json
+from pack_sources import *
 
-http_suitcase = 'http://pkit.wopr.c2x.io:8000/suitcases/rolly'
-http_parts = 'http://pkit.wopr.c2x.io:8000/robots/hey-you/parts'
-file_suitcase = '../test/suitcase.json'
-file_parts = '../test/parts.json'
 
 class TestExecutableInterface(unittest.TestCase):
 
     def setUp(self):
-        os.chdir('src')
-
-    def tearDown(self):
-        os.chdir('..')
+	pass
 
     def test_output_format(self):
         """
         Verifies that the pack bot output resembles the json format in the prompt
         """
-        command = [sys.executable, 'pack_bot.py',
+        command = [sys.executable, 'src/pack_bot.py',
             http_suitcase,
             http_parts]
         output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
@@ -34,7 +28,7 @@ class TestExecutableInterface(unittest.TestCase):
         Regresses the output of  given file inputs. In case I accidentally alter the algorithm
           while optimizing, I want to get an alarm that I broke it.
         """
-        command = [sys.executable, 'pack_bot.py', file_suitcase, file_parts]
+        command = [sys.executable, 'src/pack_bot.py', file_suitcase, file_parts]
         output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
         # output = subprocess.check_output(command)
         result = json.loads(output)

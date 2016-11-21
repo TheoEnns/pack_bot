@@ -2,11 +2,7 @@ import unittest
 from random import randint
 from src.pb_get_json import grab_dict_from
 from src.pb_knapsack import KnapSack01Solver
-
-http_suitcase = 'http://pkit.wopr.c2x.io:8000/suitcases/rolly'
-http_parts = 'http://pkit.wopr.c2x.io:8000/robots/hey-you/parts'
-file_suitcase = 'test/suitcase.json'
-file_parts = 'test/parts.json'
+from pack_sources import *
 
 class KnapSack01SolverExtended(KnapSack01Solver):
     def pick_items_brute_force(self):
