@@ -11,8 +11,8 @@
            the dynamic programming approach was better.
 """
 
-class KnapSack01Solver(object):
 
+class KnapSack01Solver(object):
     def __init__(self, parts, volume):
         """
         Class for solving 0-1 knapsacks
@@ -31,10 +31,10 @@ class KnapSack01Solver(object):
 
         :return: total_value, index_list
         """
-        if self.max_volume == 0 or self.num_options ==0:
-            return 0, [] # Trivial scenario catch; no space or no parts means nothing to pack
+        if self.max_volume == 0 or self.num_options == 0:
+            return 0, []  # Trivial scenario catch; no space or no parts means nothing to pack
 
-        #  The dynamic programing approach calls for a value_table stores maximum packable
+        # The dynamic programing approach calls for a value_table stores maximum packable
         #       values for the first i-th items given j container space where i is the
         #       row index (with i=0 corresponding to no items) and j is the column index
         #       (with j=0 being no space and iterating up to the actual container space
@@ -42,24 +42,24 @@ class KnapSack01Solver(object):
         #       only the last row and current row in memory.
 
         # value_list represents the row-1 entries of the value table
-        value_list = [0 for col in range(self.max_volume+1)]
+        value_list = [0 for col in range(self.max_volume + 1)]
         # selection_list holds the lists of parts indices used to get the values in row-1 of the value table
-        selection_list = [[] for col in range(self.max_volume+1)]
+        selection_list = [[] for col in range(self.max_volume + 1)]
 
         # If row is zero, there are no options and if col is zero, there is no room
         #  so we leave row==0 aor col==0 location at value zero
-        for row in range(1,self.num_options+1):
+        for row in range(1, self.num_options + 1):
             # Create the new selection_list and value_list for the the current row
-            new_selection_list = [[] for col in range(self.max_volume+1)]
-            new_value_list = [0 for col in range(self.max_volume+1)]
-            for col in range(1,self.max_volume+1):
+            new_selection_list = [[] for col in range(self.max_volume + 1)]
+            new_value_list = [0 for col in range(self.max_volume + 1)]
+            for col in range(1, self.max_volume + 1):
 
                 # If the part would fit at the container size col
-                if self.parts[row-1]['volume'] <= col:
+                if self.parts[row - 1]['volume'] <= col:
 
                     # Get best cumulative value if I include the part and the value if I exclude instead
-                    remainder_volume = col-self.parts[row-1]['volume']
-                    value_including_item = self.parts[row-1]['value'] + value_list[remainder_volume]
+                    remainder_volume = col - self.parts[row - 1]['volume']
+                    value_including_item = self.parts[row - 1]['value'] + value_list[remainder_volume]
                     value_excluding_item = value_list[col]
 
                     # Find which value is better
@@ -74,14 +74,14 @@ class KnapSack01Solver(object):
                     else:
                         # Otherwise include part at parts[row-1]
                         new_value_list[col] = value_including_item
-                        new_selection_list[col] = selection_list[remainder_volume] + [row-1]
+                        new_selection_list[col] = selection_list[remainder_volume] + [row - 1]
                 else:
                     # If the part cannot fit, then the solution from the subset of options
                     #   without that part is still valid
                     new_value_list[col] = value_list[col]
                     new_selection_list[col] = selection_list[col]
 
-            # Move the current row results to the contianers for the last row
+            # Move the current row results to the containers for the last row
             selection_list = new_selection_list
             value_list = new_value_list
 

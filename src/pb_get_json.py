@@ -8,35 +8,38 @@ import os
 import urllib2
 import json
 
-def http_fetch_json(httpPath):
+
+def http_fetch_json(http_path):
     """
     Grabs json string from URL
-    :param httpPath: string path of http fetch
+    :param http_path: string path of http fetch
     :return: None if fetch fails and a serialized json string otherwise
     """
     director = urllib2.build_opener()
-    req = urllib2.Request(httpPath, headers = {'Accept' : 'application/json'})
+    req = urllib2.Request(http_path, headers={'Accept': 'application/json'})
     result = director.open(req)
     if result is not None:
         return result.read()
     else:
         return None
 
-def file_fetch_json(filePath):
+
+def file_fetch_json(file_path):
     """
     Grabs json string from file path (used for testing)
-    :param filePath: string path of file
+    :param file_path: string path of file
     :return: None if open fails and a serialized json string otherwise
     """
-    if not os.path.isfile(filePath):
+    if not os.path.isfile(file_path):
         return None
-    result = open(filePath, "r")
+    result = open(file_path, "r")
     data = result.read()
     result.close()
     if data is not None:
         return data
     else:
         return None
+
 
 def grab_dict_from(source):
     """
@@ -49,6 +52,6 @@ def grab_dict_from(source):
     else:
         data = file_fetch_json(source)
     if data is None:
-        raise Exception(["Failed to open soure path: ", source])
+        raise Exception(["Failed to open source path: ", source])
     result = json.loads(data)
     return result

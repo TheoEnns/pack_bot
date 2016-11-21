@@ -24,9 +24,9 @@
 
 import argparse
 import json
-
 from pb_get_json import grab_dict_from
 from pb_knapsack import KnapSack01Solver
+
 
 def main():
     # parse args
@@ -53,41 +53,41 @@ def main():
 
     # Apply data reduction if desired (for testing)
     if args.reduction_factor > 1:
-        suitcase['volume'] = suitcase['volume']/args.reduction_factor
-        parts = parts[0:1 + (len(parts)/args.reduction_factor)]
-
+        suitcase['volume'] = suitcase['volume'] / args.reduction_factor
+        parts = parts[0:1 + (len(parts) / args.reduction_factor)]
 
     if args.verbose:
         print 'Volume: ', suitcase['volume'], ' with #items: ', len(parts)
-        sumVolume = 0
+        sum_volume = 0
         for part in parts:
-            sumVolume += part['volume']
-        print 'Out of total part volume: ', sumVolume
+            sum_volume += part['volume']
+        print 'Out of total part volume: ', sum_volume
         print 'Parts: ', parts, '\n'
 
-    #Run solver
-    solver = KnapSack01Solver(parts,suitcase['volume'])
+    # Run solver
+    solver = KnapSack01Solver(parts, suitcase['volume'])
     total_value, indices = solver.pick_items_dp()
     if args.verbose:
         print 'Total Value: ', total_value
         print 'Indices: ', indices
 
     # Collate solution
-    sumVolume = 0
-    if len(indices) ==0:
-        result = {"part_ids":None,"value":0}
+    sum_volume = 0
+    if len(indices) == 0:
+        result = {"part_ids": None, "value": 0}
     else:
-        result = {"part_ids":[],"value":total_value}
+        result = {"part_ids": [], "value": total_value}
         for index in indices:
             result["part_ids"].append(parts[index]["id"])
-            sumVolume += parts[index]['volume']
+            sum_volume += parts[index]['volume']
     if args.verbose:
-        print 'Used volume: ', sumVolume,'\n'
+        print 'Used volume: ', sum_volume, '\n'
     output = json.dumps(result, indent=4)
 
     # Output final result
     print output
     return 0
+
 
 if __name__ == '__main__':
     main()
