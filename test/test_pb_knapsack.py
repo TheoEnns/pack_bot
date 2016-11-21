@@ -12,8 +12,11 @@ class KnapSack01SolverExtended(KnapSack01Solver):
     def pick_items_brute_force(self):
         """
         A terribly inefficient recursive solution for knapsack 0-1 added as a test comparison against
-            the pick_items_dp() with small datasets. This function returns total optimal value achieved
+            the pick_items_dp() with small datasets. This function returns the total optimal value achieved
             and the list of indices of parts used.
+
+        DO NOT even bother for data sets larger then 10 parts. This is used to sanity check my solutions
+            beyond what I can eye-ball easily.
 
         :return: total_value, index_list
         """
@@ -64,10 +67,11 @@ class TestKnapSackSolver(unittest.TestCase):
               on sight and verifies that the solution I as a human got matches
               the machine's solution.
           Verifies:
-                  human solution and dp solutions match content
+                  that human solution and dp solutions match content
                   the value quoted by the solver matches the summation of values for the solution parts
                   the solution volume fits in the mini-suitcase
         """
+        #Run Test
         suitcase = {'volume':120}
         parts = [{"volume": 81, "id": "part-1", "value": 48},
                  {"volume": 71, "id": "part-2", "value": 32},
@@ -83,6 +87,7 @@ class TestKnapSackSolver(unittest.TestCase):
             compare_value += parts[index]['value']
             total_volume += parts[index]['volume']
 
+        #Grade Test
         self.assertEqual(compare_value,total_value,"Value achieved failed to match value sum over indices")
         self.assertGreater(suitcase['volume'],total_volume,"Volume picked fails to fit suitcase")
         self.assertItemsEqual(expected_indices,indices,"Solution set does not match expected set")
@@ -93,6 +98,7 @@ class TestKnapSackSolver(unittest.TestCase):
             It will raise an alarm if the expected indices or total value no longer match the file's
                 known output.
         """
+        #Run Test
         suitcase = grab_dict_from(file_suitcase)
         parts = grab_dict_from(file_parts)
         solver = KnapSack01Solver(parts,suitcase['volume'])
@@ -101,6 +107,7 @@ class TestKnapSackSolver(unittest.TestCase):
                            18, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36,
                            37, 38, 39, 41, 43]
 
+        #Grade Test
         self.assertEqual(1163,total_value,"Total value achieved failed to match expected regression value")
         self.assertItemsEqual(expected_result ,indices,"Length of indices list does not match regression")
 
@@ -110,8 +117,9 @@ class TestKnapSackSolver(unittest.TestCase):
                 the dynamic and brute force approach against a reduced suitcase.
             Verifies: brute force and dp solutions match value and solution set
                       no index in the solution set is duplicated
-                      the solution cumalitve volume fits in the mini-suitcase
+                      the solution cumulative volume fits in the mini-suitcase
         """
+        #Run Test
         suitcase = grab_dict_from(http_suitcase)
         parts = grab_dict_from(http_parts)
         reduction_factor = randint(5,10)
@@ -121,6 +129,7 @@ class TestKnapSackSolver(unittest.TestCase):
         dp_total_value, dp_indices = solver.pick_items_dp()
         bf_total_value, bf_indices = solver.pick_items_brute_force()
 
+        #Grade Test
         self.assertEqual(bf_total_value, dp_total_value,
                          "DP solution does not match the value of brute force solution")
         self.assertItemsEqual(dp_indices, bf_indices,"dp solution does not match in bf_index list")

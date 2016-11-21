@@ -13,7 +13,7 @@ class TestImportingInputSources(unittest.TestCase):
 
     def test_http_fetch_json(self):
         """
-        Simple check to verify I can reach servers; does not verify content of server
+        Simple check to verify I can reach servers; does not verify content of output
         """
         data = pb_get_json.http_fetch_json(http_suitcase)
         self.assertIsNotNone(data)

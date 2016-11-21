@@ -17,6 +17,9 @@ class TestExecutableInterface(unittest.TestCase):
         os.chdir('..')
 
     def test_output_format(self):
+        """
+        Verifies that the pack bot output resembles the json format in the prompt
+        """
         command = [sys.executable, 'pack_bot.py',
             http_suitcase,
             http_parts]
@@ -27,6 +30,10 @@ class TestExecutableInterface(unittest.TestCase):
         self.assertIn('part_ids',result, "pack_bot.py failed to output json field 'part_ids'")
 
     def test_regress_against_files(self):
+        """
+        Regresses the output of  given file inputs. In case I accidentally alter the algorithm
+          while optimizing, I want to get an alarm that I broke it.
+        """
         command = [sys.executable, 'pack_bot.py', file_suitcase, file_parts]
         output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
         # output = subprocess.check_output(command)

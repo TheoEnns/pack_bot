@@ -68,20 +68,22 @@ class KnapSack01Solver(object):
                     #  reporting, but with this being Thanksgiving vacation time, I will lean to the literal
                     #  return format of the prompt.
                     if value_including_item < value_excluding_item:
-                        #Then do not to include part at parts[row-1]
+                        # Then do not to include part at parts[row-1]
                         new_value_list[col] = value_excluding_item
                         new_selection_list[col] = selection_list[col]
                     else:
-                        #Otherwise include part at parts[row-1]
+                        # Otherwise include part at parts[row-1]
                         new_value_list[col] = value_including_item
                         new_selection_list[col] = selection_list[remainder_volume] + [row-1]
                 else:
-                    #If the part cannot fit, then the solution from the subset of options
+                    # If the part cannot fit, then the solution from the subset of options
                     #   without that part is still valid
                     new_value_list[col] = value_list[col]
                     new_selection_list[col] = selection_list[col]
-            #move the current row results to the contianers for the last row
+
+            # Move the current row results to the contianers for the last row
             selection_list = new_selection_list
             value_list = new_value_list
-        #The last entry of the last row is the solution
+
+        # The last entry of the last row is the solution
         return value_list[self.max_volume], selection_list[self.max_volume]

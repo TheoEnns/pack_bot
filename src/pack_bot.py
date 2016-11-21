@@ -72,7 +72,7 @@ def main():
         print 'Total Value: ', total_value
         print 'Indices: ', indices
 
-    #Collate solution
+    # Collate solution
     sumVolume = 0
     if len(indices) ==0:
         result = {"part_ids":None,"value":0}
@@ -85,7 +85,7 @@ def main():
         print 'Used volume: ', sumVolume,'\n'
     output = json.dumps(result, indent=4)
 
-    #output final result
+    # Output final result
     print output
     return 0
 
