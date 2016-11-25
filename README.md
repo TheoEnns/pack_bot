@@ -11,7 +11,7 @@ example usage (for linux):
 At the project route, run
 > $python -m unittest discover -v
 
-The end output should state all sven tests passed, for example:
+The end output should state all seven tests passed, for example:
 >Ran 7 tests in 1.266s
 OK
 
